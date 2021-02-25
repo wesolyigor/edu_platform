@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: "./Dockerfile"
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    volumes:
+    - .:/code
+    ports:
+    - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - "DJANGO_SECRET_KEY=secret"
+      - "DJANGO_DEBUG=1"
+      - "DB_NAME=postgres"
+      - "DB_USER=postgres"
+      - "DB_PASSWORD=postgres"
+      - "DB_HOST=DB"
+      - "DB_PORT=5432"
+
+    networks:
+      - python_world_network
+
+
+
+  db:
+    image: library/postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    networks:
+      - python_world_network
+
+
+volumes:
+  postgres_data:
+
+networks:
+  python_world_network:
+    driver: bridge
