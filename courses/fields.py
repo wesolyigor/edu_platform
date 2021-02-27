@@ -14,7 +14,7 @@ class OrderField(models.PositiveIntegerField):
                 if self.for_fields:
                     query = {field: getattr(model_instance, field) for field in self.for_fields}
                     qs = qs.filter(**query)
-                last_item = qs.lates(self.attname)
+                last_item = qs.latest(self.attname)
                 value = last_item.order + 1
             except ObjectDoesNotExist:
                 value = 0

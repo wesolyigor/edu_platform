@@ -28,12 +28,12 @@ class CustomUserTests(TestCase):
         User = get_user_model()
         admin_user = User.objects.create_superuser(
             username="superadmin",
-            email="o@o.pl",
+            email="i@i.pl",
             password="testpass123"
         )
 
         self.assertEqual(admin_user.username, "superadmin")
-        self.assertEqual(admin_user.email, "o@o.pl")
+        self.assertEqual(admin_user.email, "i@i.pl")
         self.assertTrue(admin_user.is_active)
         self.assertTrue(admin_user.is_staff)
         self.assertTrue(admin_user.is_superuser)
@@ -49,9 +49,9 @@ class SignupPateTests(TestCase):
 
     def test_signup_template(self):
         self.assertEqual(self.response.status_code, 200)
-        self.assertTemplateUsed(self.response, "account/signup.html")
-        self.assertContains(self.response, "Sign Up")
-        self.assertNotContains(self.response, "I should be not on the page")
+        self.assertTemplateUsed(self.response, 'account/signup.html')
+        self.assertContains(self.response, 'Sign Up')
+        self.assertNotContains(self.response, 'I should not be on the page')
 
     def test_signup_form(self):
         new_user = get_user_model().objects.create_user(

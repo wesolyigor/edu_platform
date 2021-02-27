@@ -1,0 +1,27 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <form class="form-signin" action="{% url 'users:registration' %}" method="post">
+        {% csrf_token %}
+        <h3 class="mb-3 text-center">Register here</h3>
+        {% if form.errors %}
+            {% for error in form.errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Something wrong with: <strong>{{ error}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {{ form|crispy }}
+        <div class="log-link mb-3">
+            <label>
+                Already have an account?
+                <a href="{% url 'users:login' %}" class="text-danger">Login</a>
+            </label>
+        </div>
+        <button class="btn btn-danger btn-block mt-2 pt-2" type="submit">Register</button>
+    </form>
+{% endblock %}

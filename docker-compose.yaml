@@ -22,7 +22,7 @@ services:
       - "DB_PORT=5432"
 
     networks:
-      - python_world_network
+      - edu_platform_network
 
 
 
@@ -33,12 +33,12 @@ services:
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
     networks:
-      - python_world_network
+      - edu_platform_network
 
 
 volumes:
   postgres_data:
 
 networks:
-  python_world_network:
+  edu_platform_network:
     driver: bridge

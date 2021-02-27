@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+
+# Create your models here.
 from django.template.loader import render_to_string
 from django.utils.text import slugify
 
@@ -21,7 +23,7 @@ class Subject(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        super(Subject, self).save(*args, **kwargs)
+            super(Subject, self).save(*args, **kwargs)
 
 
 class Course(models.Model):
@@ -53,7 +55,9 @@ class Course(models.Model):
 
 
 class Module(models.Model):
-    course = models.ForeignKey(Course, related_name="modules", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course,
+                               related_name='modules',
+                               on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     order = OrderField(blank=True, for_fields=['course'])
@@ -66,7 +70,9 @@ class Module(models.Model):
 
 
 class Content(models.Model):
-    module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
+    module = models.ForeignKey(Module,
+                               related_name='contents',
+                               on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType,
                                      on_delete=models.CASCADE,
                                      limit_choices_to={'model__in': (
@@ -76,7 +82,7 @@ class Content(models.Model):
                                          'file'
                                      )})
     object_id = models.PositiveIntegerField()
-    item = GenericForeignKey('content_type', "object_id")
+    item = GenericForeignKey('content_type', 'object_id')
     order = OrderField(blank=True, for_fields=['module'])
 
     class Meta:
