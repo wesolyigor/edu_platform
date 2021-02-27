@@ -49,7 +49,7 @@ class Course(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-            super(Course, self).save(*args, **kwargs)
+        super(Course, self).save(*args, **kwargs)
 
 
 class Module(models.Model):

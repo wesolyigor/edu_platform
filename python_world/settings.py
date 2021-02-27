@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # third party
     'crispy_forms',
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # Local
     'users.apps.UsersConfig',
     'courses.apps.CoursesConfig',
+    'home.apps.HomeConfig',
 
 ]
 
