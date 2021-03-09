@@ -12,5 +12,4 @@ urlpatterns = [
     path('<int:pk>/module/', views.CourseModuleUpdateView.as_view(), name='course-modules-update'),
     path('module/<int:module_id>/content/<model_name>/create', views.ContentCreateUpdateView.as_view(),
          name='module-content-create'),
-
 ]

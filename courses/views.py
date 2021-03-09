@@ -1,10 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import modelform_factory
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 
-# Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.views.generic.base import TemplateResponseMixin, View
 
 from django.apps import apps
@@ -38,12 +37,12 @@ class CourseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     login_url = reverse_lazy('users:login')
     raise_exception = True
     context_object_name = 'course'
-    permissions_required = 'course.change_course'
+    permissions_required = 'courses.change_course'
     fields = ['title', 'subject', 'slug', 'overview', 'course_image']
     success_url = reverse_lazy('home')
 
 
-class CourseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class CourseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Course
     permission_required = 'courses.delete_course'
     template_name = 'courses/delete_course.html'
@@ -113,6 +112,6 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
             if not id:
                 Content.objects.create(module=self.module, item=obj)
 
-            return redirect('courses:course-detail', self.module.course.slug)
+            return redirect('courses:course-detail', self.module.id)
 
         return self.render_to_response({'form': form, 'object': self.obj})
